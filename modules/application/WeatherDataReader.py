@@ -6,14 +6,14 @@
 
     1) dry_bulb_temp_ave_stddev(date, scale):
 
-    This function takes as arguments a date to examine and the
+    This operation takes as arguments a date and the
     user's temperature scale of choice (C or F), and computes
     the mean and standard deviation of the temperature
     values recorded between sunrise and sunset
 
     2) wind_chill_by_time(date, threshold = 40):
 
-    This function takes as arguments a date to examine and
+    This operation takes as arguments a date and
     an upper temperature threshold, and returns the
     wind chill rounded to the nearest integer for the times
     when the temperature is less than the value of threshold
@@ -21,8 +21,8 @@
 
     3) find_most_similar_date():
 
-    This function reads the two datasets and finds the day
-    in which the conditions in Canadian, TX, were most
+    This operation reads the two datasets and finds the day
+    where the conditions in Canadian, TX, were most
     similar to Atlanta's Hartsfield-Jackson Airport
 """
 import csv, statistics
@@ -37,8 +37,8 @@ class WeatherDataReader():
     
     def dry_bulb_temp_ave_stddev(self, date, scale):
         """
-        This method takes a date as its argument
-        and returns a data structure with the average and
+        Take a date and a temperature scale value and return
+        a data structure with the average and
         standard deviation of the temperature (dry-bulb)
         between the hours of sunrise and sunset
 
@@ -99,7 +99,7 @@ class WeatherDataReader():
 
     def wind_chill_by_time(self, date, threshold):
         """
-        This method takes a date as its argument and returns the
+        Take a date and an upper threshold and return the
         wind chill rounded to the nearest integer for the times
         when the temperature is less than the value of the argument
         threshold (defaults to 40 degrees on the Fahrenheit scale)
@@ -123,7 +123,7 @@ class WeatherDataReader():
             print("Threshold value must be greater than 0: {0}".format(threshold))
             return -3
 
-        # Dictionary to hold the "time" : "wind chill" pairs
+        # List to hold the "time" and "wind chill" values
         wind_chill = []
 
         # Date found flag will change to "True" if
@@ -139,12 +139,14 @@ class WeatherDataReader():
                 if (row["HOURLYWindSpeed"] != ""):
 
                     # Round temperature value to nearest integer
-                    dec = Decimal(row["HOURLYWindSpeed"]).quantize(Decimal(1), \
-                        rounding = ROUND_HALF_EVEN)
+                    if (row["HOURLYDRYBULBTEMPF"] != ""):
+                        print(row["HOURLYDRYBULBTEMPF"])
+                        temp = Decimal(row["HOURLYDRYBULBTEMPF"]).quantize(Decimal(1), rounding = ROUND_HALF_EVEN)
+                        wind = Decimal(row["HOURLYWindSpeed"]).quantize(Decimal(1), rounding = ROUND_HALF_EVEN)
 
-                    # Add wind chill values that are less than the threshhold
-                    if (dec < threshold):
-                        wind_chill.append("{0} : {1}\n".format(row["DATE"].split(' ')[1], dec))
+                        # Add wind chill values that are less than the threshhold
+                        if (temp < threshold):
+                            wind_chill.append("{0} : {1}\n".format(row["DATE"].split(' ')[1], wind))
         
         # Notify user if date not found in data
         # and return error
@@ -156,7 +158,7 @@ class WeatherDataReader():
 
     def find_most_similar_date(self, threshold):
         """
-        This method reads two data sets and finds the day
+        This function reads two data sets and finds the day
         in which the conditions in Canadian, TX, were most
         similar to Atlanta's Hartsfield-Jackson Airport
 
