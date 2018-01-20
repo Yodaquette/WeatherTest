@@ -7,7 +7,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from modules.application.MainWindow import MainWindow
-from modules.application.WeatherDataReader import WeatherDataReader
 
 app = QApplication(sys.argv)
 main_window = MainWindow()
