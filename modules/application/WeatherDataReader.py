@@ -94,7 +94,8 @@ class WeatherDataReader():
             print("Could not find date {0} in data".format(date))
             return -3
         
-        return (statistics.mean(temps), statistics.stdev(temps))
+        return ("Temperature Mean: {0}\n".format(statistics.mean(temps)), \
+            "Temperature Standard Deviation: {0}".format(statistics.stdev(temps)))
 
     def wind_chill_by_time(self, date, threshold):
         """
@@ -123,7 +124,7 @@ class WeatherDataReader():
             return -3
 
         # Dictionary to hold the "time" : "wind chill" pairs
-        wind_chill = {}
+        wind_chill = []
 
         # Date found flag will change to "True" if
         # the submitted date is found
@@ -143,7 +144,7 @@ class WeatherDataReader():
 
                     # Add wind chill values that are less than the threshhold
                     if (dec < threshold):
-                        wind_chill[row["DATE"].split(' ')[1]] = dec
+                        wind_chill.append("{0} : {1}\n".format(row["DATE"].split(' ')[1], dec))
         
         # Notify user if date not found in data
         # and return error
@@ -204,10 +205,10 @@ class WeatherDataReader():
                                 # the difference in temperature is less than
                                 # the current lowest value
                                 if (not most_similar or dry_bulb_diff < most_similar[3]):
-                                    most_similar.append("Most similar date: {0}".format(data1["DATE"].split(" ")[0].strip()))
-                                    most_similar.append("Canadian, TX, Average Daily Temperature: {0}".format(
+                                    most_similar.append("Most similar date: {0}\n".format(data1["DATE"].split(" ")[0].strip()))
+                                    most_similar.append("Canadian, TX, Average Daily Temperature: {0}\n".format(
                                         data1["DAILYAverageDryBulbTemp"]))
-                                    most_similar.append("Atlanta Hartsfield International Airport, GA, Average Daily Temperature: {0}".format(
+                                    most_similar.append("Atlanta Hartsfield International Airport, GA, Average Daily Temperature: {0}\nTemperature difference: ".format(
                                         data2["DAILYAverageDryBulbTemp"]))
                                     most_similar.append(dry_bulb_diff)
                     else:

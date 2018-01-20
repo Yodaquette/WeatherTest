@@ -15,7 +15,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.output = QTextEdit()
         self.date = QLineEdit(self)
-        self.scale = "f"
+        self.scale = ""
         self.celsius = QRadioButton("Celsius")
         self.farenheit = QRadioButton("Farenheit")
         self.threshold = QLineEdit(self)
@@ -62,6 +62,8 @@ class MainWindow(QWidget):
         grid.addWidget(lbl_scale, 8, 0, 1, 1)
         grid.addWidget(self.celsius, 8, 1, 1, 1)
         grid.addWidget(self.farenheit, 8, 2, 1, 1)
+        self.celsius.toggled.connect(self.set_scale)
+        self.farenheit.toggled.connect(self.set_scale)
 
         # Setup text box and label for threshold
         lbl_threshold = QLabel("Threshold (in F)")
@@ -167,7 +169,9 @@ class MainWindow(QWidget):
 
         # Show data returned from the function
         self.output.clear()
-        self.write_text(str(ret))
+        # self.write_text(str(ret))
+        for data in ret:
+            self.write_text("{0}".format(data))
     
     def get_wind_chill_by_time(self):
         """
@@ -207,7 +211,9 @@ class MainWindow(QWidget):
 
         # Show data returned from the function
         self.output.clear()
-        self.write_text(str(ret))
+        # self.write_text(str(ret))
+        for data in ret:
+            self.write_text("{0}".format(data))
 
     def get_most_similar_weather_by_date(self):
         """
@@ -235,7 +241,9 @@ class MainWindow(QWidget):
 
         # Show data returned from the function
         self.output.clear()
-        self.write_text(str(ret))
+        # self.write_text(str(ret))
+        for data in ret:
+            self.write_text("{0}".format(data))
 
     def set_scale(self):
         """
@@ -251,7 +259,7 @@ class MainWindow(QWidget):
         Show the instructions for the application
         """
         if (self.output.toPlainText() == ""):
-            self.write_text( "See simple weather stats for Canadian, TX, and ATL Hartsfield International Airport, GA\n\n" + 
+            self.write_text("See simple weather stats for Canadian, TX, and ATL Hartsfield International Airport, GA\n\n" + 
                 "Press the button 'Calculate Mean and Std. Deviation Dry Bulb Temp for a Date' " +
                 "to see the mean and standard deviation for the date entered in the Date textbox " +
                 "according to your temperature scale of preference.\n\n" +
@@ -266,7 +274,7 @@ class MainWindow(QWidget):
             QMessageBox.No, QMessageBox.No)
         if (option == QMessageBox.Yes):
             self.output.clear()
-            self.write_text( "See simple weather stats for Canadian, TX, and ATL Hartsfield International Airport, GA\n\n" + 
+            self.write_text("See simple weather stats for Canadian, TX, and ATL Hartsfield International Airport, GA\n\n" + 
                 "Press the button 'Calculate Mean and Std. Deviation Dry Bulb Temp for a Date' " +
                 "to see the mean and standard deviation for the date entered in the Date textbox " +
                 "according to your temperature scale of preference.\n\n" +
