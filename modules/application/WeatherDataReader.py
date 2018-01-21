@@ -136,11 +136,10 @@ class WeatherDataReader():
                 date_found = True
 
                 # Ensure a temperature value exists before rounding
-                if (row["HOURLYWindSpeed"] != ""):
+                if (not row["HOURLYWindSpeed"] != "" or row["HOURLYWindSpeed"] != ""):
 
                     # Round temperature value to nearest integer
                     if (row["HOURLYDRYBULBTEMPF"] != ""):
-                        print(row["HOURLYDRYBULBTEMPF"])
                         temp = Decimal(row["HOURLYDRYBULBTEMPF"]).quantize(Decimal(1), rounding = ROUND_HALF_EVEN)
                         wind = Decimal(row["HOURLYWindSpeed"]).quantize(Decimal(1), rounding = ROUND_HALF_EVEN)
 

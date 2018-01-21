@@ -127,8 +127,6 @@ class MainWindow(QWidget):
 
         # Default the output to show application instructions
         self.show_app_instructions()
-        # self.write_text("Press one of the buttons below to view some " +
-        #     "simple weather statistics for Canadian, TX, and Atlanta Hartsfield International Airport, GA")
 
         # Set window options then show
         self.setGeometry(300, 300, 800, 500)
@@ -270,7 +268,7 @@ class MainWindow(QWidget):
             return
 
         option = QMessageBox.question(self, "Message",
-            "Showing instructions will erase current text", QMessageBox.Yes |
+            "Showing instructions will erase current results", QMessageBox.Yes |
             QMessageBox.No, QMessageBox.No)
         if (option == QMessageBox.Yes):
             self.output.clear()
@@ -299,7 +297,7 @@ class MainWindow(QWidget):
         Exit the application
         """
         option = QMessageBox.question(self, "Message",
-            "Are you sure to exit?", QMessageBox.Yes |
+            "Are you sure you want to exit?", QMessageBox.Yes |
             QMessageBox.No, QMessageBox.No)
 
         if (option == QMessageBox.Yes):
