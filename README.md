@@ -3,6 +3,10 @@
 ## Description
 Simple weather data reader application developed with Python and PyQt5.
 
+## How to run
+From a terminal, command-line interface, move to the project root directory
+then run the following command: _python[2-3] app.py_
+
 ## Required Software
 
 1. Python 3.x
